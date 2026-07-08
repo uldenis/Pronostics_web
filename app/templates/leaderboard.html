@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+
+<div class="competition-tabs">
+  {% for competition in competitions %}
+    <a href="/leaderboard?competition={{ competition.code }}"
+       class="tab {{ 'active' if competition.code == selected_code }}">{{ competition.name }}</a>
+  {% endfor %}
+</div>
+
+<h1>🏆 Leaderboard</h1>
+
+{% if not rows %}
+  <p class="empty-state">No scored predictions yet for this competition.</p>
+{% else %}
+<table>
+  <thead>
+    <tr><th>#</th><th>Player</th><th>Points</th></tr>
+  </thead>
+  <tbody>
+    {% for user_id, name, points in rows %}
+    <tr {% if user and user_id == user.id %}style="outline: 2px solid #22c55e;"{% endif %}>
+      <td>{{ loop.index }}</td>
+      <td>{{ name }}{% if user and user_id == user.id %} (you){% endif %}</td>
+      <td>{{ points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

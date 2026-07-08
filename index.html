@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Match Predictions</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+    margin: 0;
+  }
+  h1 {
+    margin-bottom: 24px;
+  }
+  .match-card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .team {
+    font-size: 1.1em;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+  }
+  .score-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .score-inputs input {
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: #f1f5f9;
+  }
+  .vs {
+    padding: 0 12px;
+    color: #94a3b8;
+  }
+  .match-date {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  button {
+    display: block;
+    margin: 24px auto 0;
+    padding: 12px 32px;
+    font-size: 1em;
+    background: #22c55e;
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background: #16a34a;
+  }
+</style>
+</head>
+<body>
+
+<h1>⚽ Match Predictions</h1>
+
+<div class="match-card">
+  <div class="match-date">Saturday, 15:00</div>
+  <div class="teams">
+    <span class="team">Real Madrid</span>
+    <div class="score-inputs">
+      <input type="number" min="0" placeholder="0">
+      <span class="vs">-</span>
+      <input type="number" min="0" placeholder="0">
+    </div>
+    <span class="team">Barcelona</span>
+  </div>
+</div>
+
+<div class="match-card">
+  <div class="match-date">Saturday, 18:00</div>
+  <div class="teams">
+    <span class="team">Manchester United</span>
+    <div class="score-inputs">
+      <input type="number" min="0" placeholder="0">
+      <span class="vs">-</span>
+      <input type="number" min="0" placeholder="0">
+    </div>
+    <span class="team">Liverpool</span>
+  </div>
+</div>
+
+<div class="match-card">
+  <div class="match-date">Sunday, 20:45</div>
+  <div class="teams">
+    <span class="team">PSG</span>
+    <div class="score-inputs">
+      <input type="number" min="0" placeholder="0">
+      <span class="vs">-</span>
+      <input type="number" min="0" placeholder="0">
+    </div>
+    <span class="team">Bayern Munich</span>
+  </div>
+</div>
+
+<button>Submit Predictions</button>
+
+</body>
+</html>

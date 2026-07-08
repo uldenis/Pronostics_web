@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+
+<h1>⚽ Join the pool</h1>
+<p class="empty-state">Pick a username. If it's new, it creates your account - no password.</p>
+
+{% if error %}
+  <p class="empty-state" style="color: #f87171;">{{ error }}</p>
+{% endif %}
+
+<div class="match-card">
+  <form method="post" action="/login">
+    <input type="hidden" name="next" value="{{ next }}">
+    <label for="username" style="display:block; margin-bottom:8px; color:#94a3b8;">Username</label>
+    <input type="text" id="username" name="username" placeholder="e.g. Ulysse" required
+           style="width:100%; box-sizing:border-box; padding:12px; border-radius:8px; border:1px solid #475569; background:#0f172a; color:#f1f5f9; font-size:1em; margin-bottom:12px;">
+    <button type="submit">Continue</button>
+  </form>
+</div>
+
+{% endblock %}

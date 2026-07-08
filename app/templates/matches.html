@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Predictions{% endblock %}
+{% block content %}
+
+<div class="competition-tabs">
+  {% for competition in competitions %}
+    <a href="/predictions?competition={{ competition.code }}"
+       class="tab {{ 'active' if competition.code == selected_code }}">{{ competition.name }}</a>
+  {% endfor %}
+</div>
+
+{% if matchday_tabs %}
+<div class="matchday-tabs">
+  {% for tab in matchday_tabs %}
+    <a href="/predictions?competition={{ selected_code }}&matchday={{ tab.matchday }}"
+       class="tab {{ 'active' if tab.matchday == selected_matchday }}">{{ tab.label }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+<h1>⚽ {{ selected_matchday_label if selected_matchday_label is not none else "-" }}</h1>
+
+{% if not matches %}
+  <p class="empty-state">No fixtures synced yet for this competition. Run sync_fixtures to load a matchday.</p>
+{% endif %}
+
+{% for match in matches %}
+  {% set prediction = predictions.get(match.id) %}
+  {% set locked = now >= match.kickoff_at %}
+  {% set finished = match.home_score is not none and match.away_score is not none %}
+  <div class="match-card">
+    <div class="match-meta">
+      {{ match.kickoff_at.strftime("%a %d %b, %H:%M UTC") }}
+      {% if finished %}&middot; final{% elif locked %}<span class="locked-tag">&middot; locked</span>{% endif %}
+    </div>
+
+    {% if finished %}
+      <div class="teams">
+        <span class="team">{{ match.home_team }}</span>
+        <span class="final-score">{{ match.home_score }} - {{ match.away_score }}</span>
+        <span class="team">{{ match.away_team }}</span>
+      </div>
+      <div class="prediction-result">
+        {% if prediction %}
+          Your prediction: {{ prediction.pred_home }}-{{ prediction.pred_away }}
+          {% if prediction.points is not none %}&rarr; {{ prediction.points }} pt{{ "s" if prediction.points != 1 }}{% else %}(scoring pending){% endif %}
+        {% else %}
+          No prediction submitted
+        {% endif %}
+      </div>
+    {% else %}
+      <form method="post" action="/predictions">
+        <input type="hidden" name="match_id" value="{{ match.id }}">
+        <div class="teams">
+          <span class="team">{{ match.home_team }}</span>
+          <div class="score-inputs">
+            <input type="number" name="pred_home" min="0" placeholder="0"
+                   value="{{ prediction.pred_home if prediction else '' }}"
+                   {% if locked %}disabled{% endif %} required>
+            <span class="vs">-</span>
+            <input type="number" name="pred_away" min="0" placeholder="0"
+                   value="{{ prediction.pred_away if prediction else '' }}"
+                   {% if locked %}disabled{% endif %} required>
+          </div>
+          <span class="team">{{ match.away_team }}</span>
+        </div>
+        <button type="submit" {% if locked %}disabled{% endif %}>
+          {{ "Locked" if locked else (prediction and "Update" or "Submit") }}
+        </button>
+      </form>
+    {% endif %}
+  </div>
+{% endfor %}
+
+{% endblock %}

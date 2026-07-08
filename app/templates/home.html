@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Pronostics{% endblock %}
+{% block content %}
+
+<h1>⚽ Pronostics entre amis</h1>
+<p class="empty-state">Devinez le score des matchs à venir et affrontez vos amis au classement.</p>
+
+<div class="match-card" style="max-width: 560px;">
+  <h2 style="margin-top:0;">Comment ça marche</h2>
+  <ul style="color:#cbd5e1; line-height:1.7; padding-left:20px; margin-bottom:0;">
+    <li>Choisissez un pseudo pour rejoindre le jeu - pas besoin de mot de passe.</li>
+    <li>Pour chaque match à venir, pronostiquez le score exact.</li>
+    <li>Vous pouvez modifier votre pronostic tant que le match n'a pas commencé. Une fois
+      le coup d'envoi donné, il est verrouillé - impossible de tricher après coup.</li>
+    <li>Une fois le match terminé, vos points sont calculés automatiquement.</li>
+    <li>Chaque compétition (Premier League, Coupe du Monde, ...) a son propre classement.</li>
+  </ul>
+</div>
+
+<div class="match-card" style="max-width: 560px;">
+  <h2 style="margin-top:0;">Barème de points</h2>
+  <table>
+    <thead>
+      <tr><th>Pronostic</th><th>Points</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Score exact (ex : vous annoncez 2-1, le résultat est 2-1)</td>
+        <td>3 pts</td>
+      </tr>
+      <tr>
+        <td>Bon écart de buts, score inexact (ex : vous annoncez 2-1, le résultat est 3-2)</td>
+        <td>2 pts</td>
+      </tr>
+      <tr>
+        <td>Bon résultat seulement (victoire, nul ou défaite deviné, mais pas le score)</td>
+        <td>1 pt</td>
+      </tr>
+      <tr>
+        <td>Résultat faux</td>
+        <td>0 pt</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% if user %}
+  <a href="/predictions" class="cta-link">Voir les matchs à pronostiquer</a>
+{% else %}
+  <a href="/login" class="cta-link">Rejoindre le jeu</a>
+{% endif %}
+
+{% endblock %}
