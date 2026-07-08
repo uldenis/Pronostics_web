@@ -1,15 +1,5 @@
-import os
-import sys
-
 from pydantic import BaseModel, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-# TEMPORARY DIAGNOSTIC - remove once the Railway env var issue is resolved.
-print(
-    f"[diag] total env vars visible: {len(os.environ)}; "
-    f"relevant keys present: {[k for k in os.environ if any(s in k.upper() for s in ('FOOTBALL', 'SECRET', 'DATABASE'))]}",
-    file=sys.stderr,
-)
 
 
 class CompetitionConfig(BaseModel):
@@ -34,6 +24,7 @@ class Settings(BaseSettings):
         if value.startswith("postgresql://"):
             return value.replace("postgresql://", "postgresql+psycopg://", 1)
         return value
+
     football_data_base_url: str = "https://api.football-data.org/v4"
 
     # Adding a competition later is just adding an entry here (same provider/sport).
